@@ -4,6 +4,28 @@ var grantLives = 3;
 var userWins = 0;
 var grantWins = 0;
 
+var character = {
+	name: null,
+	health: 40,
+	healsRemaining: 2,
+	wins: 0,
+	generateAttackDamage: function() {
+		return Math.floor(math.random() * 3) + 1;
+	},
+	heal: function() {
+		this.health += Math.floor(math.random() * 10) + 1;
+		this.healsRemaining --;
+	}
+}
+
+var grant {
+	name: null,
+	health: 10,
+	generateAttackDamage: function() {
+		return Math.floor(math.random() * 5) + 1;
+	}
+}
+
 function startGame() {
 	var playGame = prompt("Do you want to play a game with two characters?");
 	if (playGame.toLowerCase() === "yes") {
@@ -20,7 +42,7 @@ function getDamage() {
 function startCombat (userName) {  
 	while (userHealth > 0 && grantHealth > 0 && grantLives > 0) {
 	 
-		var attackOrQuit = prompt("Do you want to attack or quit?");
+		var attackOrQuit = prompt("Do you want to attack, heal, or quit?");
 		if (attackOrQuit.toLowerCase() === "attack") {
 			var userDamage = getDamage();
 			var grantDamage = getDamage();
@@ -34,6 +56,9 @@ function startCombat (userName) {
 					grantHealth = 10;
 				}
 			}
+		} else if (attackOrQuit.toLowerCase() === "heal") {
+			heal();
+			return;
 		} else if (attackOrQuit.toLowerCase() === "quit") {
 			return;
 		}
