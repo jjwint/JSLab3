@@ -10,10 +10,10 @@ var character = {
 	healsRemaining: 2,
 	wins: 0,
 	generateAttackDamage: function() {
-		return Math.floor(math.random() * 3) + 1;
+		return Math.floor(Math.random() * 3) + 1;
 	},
 	heal: function() {
-		this.health += Math.floor(math.random() * 10) + 1;
+		this.health += Math.floor(Math.random() * 10) + 1;
 		this.healsRemaining --;
 	}
 }
@@ -22,7 +22,7 @@ var grant = {
 	name: null,
 	health: 10,
 	generateAttackDamage: function() {
-		return Math.floor(math.random() * 5) + 1;
+		return Math.floor(Math.random() * 5) + 1;
 	}
 }
 
@@ -34,20 +34,15 @@ function startGame() {
 	}
 }
 
-function getDamage() {
-	 var damage = Math.floor(Math.random() * 5) + 1;
-	 return damage;
-}
-
-function startCombat (userName) {  
+function startCombat (userName, healsRemaining) {  
 	while (userHealth > 0 && grantHealth > 0 && grantLives > 0) {
 	 
 		var attackOrQuit = prompt("Do you want to attack, heal, or quit?");
+
 		if (attackOrQuit.toLowerCase() === "attack") {
-			var userDamage = getDamage();
-			var grantDamage = getDamage();
-			userHealth -= userDamage;
-			grantHealth -= grantDamage;
+			character.generateAttackDamage();
+			grant.generateAttackDamage();
+
 			if (grantHealth  < 1 && grantLives >= 1) {
 				grantLives --;
 				userWins ++;
@@ -60,7 +55,7 @@ function startCombat (userName) {
 			if (healsRemaining < 1) {
 				break;
 			}
-			heal();
+			character.heal();
 			break;
 		} else if (attackOrQuit.toLowerCase() === "quit") {
 			return;
