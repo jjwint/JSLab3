@@ -18,7 +18,7 @@ var character = {
 	}
 }
 
-var grant {
+var grant = {
 	name: null,
 	health: 10,
 	generateAttackDamage: function() {
@@ -57,8 +57,11 @@ function startCombat (userName) {
 				}
 			}
 		} else if (attackOrQuit.toLowerCase() === "heal") {
+			if (healsRemaining < 1) {
+				break;
+			}
 			heal();
-			return;
+			break;
 		} else if (attackOrQuit.toLowerCase() === "quit") {
 			return;
 		}
