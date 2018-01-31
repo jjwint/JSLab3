@@ -1,5 +1,3 @@
-var grantLives = 3;
-
 var character = {
 	name: null,
 	health: 40,
@@ -17,6 +15,7 @@ var character = {
 var grant = {
 	name: null,
 	health: 10,
+	lives: 3,
 	generateAttackDamage: function() {
 		return Math.floor(Math.random() * 5) + 1;
 	}
@@ -25,12 +24,12 @@ var grant = {
 function startGame() {
 	var playGame = prompt("Do you want to play a game with two characters?");
 	if (playGame.toLowerCase() === "yes") {
-		var userName = prompt ("What do you want to name your character?");
-		startCombat(userName);
+		character.name = prompt ("What do you want to name your character?");
+		startCombat();
 	}
 }
 
-function startCombat (userName, healsRemaining) {  
+function startCombat() {  
 	while (character.health > 0 && grant.health > 0) {
 	 
 		var attackOrQuit = prompt("Do you want to attack, heal, or quit?");
@@ -39,27 +38,33 @@ function startCombat (userName, healsRemaining) {
 			character.health -= grant.generateAttackDamage();
 			grant.health -= character.generateAttackDamage();
 
-			if (grant.health  < 1 && grantLives >= 1) {
-				grantLives --;
+			if (grant.health  < 1) {
 				character.wins ++;
+				console.log(character.name + " HAS WON " + character.wins + " GAMES");
 
-				if (grantLives >= 1) {
-					console.log("THE ALMIGHTY GRANT HAS " + grantLives + " LIVES LEFT.");
+				if (character.wins < 5) {
 					grant.health = 10;
 				}
 			}
+
 		} else if (attackOrQuit.toLowerCase() === "heal") {
 			if (character.healsRemaining > 0) {
 				character.heal();
 			}
+
 		} else if (attackOrQuit.toLowerCase() === "quit") {
-			return;
+			break;
+		} else {
+			break;
 		}
-		console.log(userName + " has " + character.health + " health left.")
-		console.log("The Almighty Grant has " + grant.health + " health left.")
+		if (character.health >= 0 && grant.health >= 0){
+			console.log(character.name + " has " + character.health + " health left.");			
+			console.log("The Almighty Grant has " + grant.health + " health left.");
+		}
 	}
-	if (grantLives <= 0) {
-		console.log(userName + " is the winner!");
+
+	if (character.wins === 5) {
+		console.log(character.name + " is the winner!");
 	} else if (character.health <= 0) {
 		console.log("The Almighty Grant is the winner!");
 	}
