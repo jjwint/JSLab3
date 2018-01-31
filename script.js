@@ -39,12 +39,9 @@ function startCombat() {
 			grant.health -= character.generateAttackDamage();
 
 			if (grant.health  < 1) {
+				grant.health = 10;
 				character.wins ++;
-				console.log(character.name + " HAS WON " + character.wins + " GAMES");
-
-				if (character.wins < 5) {
-					grant.health = 10;
-				}
+				console.log(character.name + " HAS WON " + character.wins + " GAMES")
 			}
 
 		} else if (attackOrQuit.toLowerCase() === "heal") {
