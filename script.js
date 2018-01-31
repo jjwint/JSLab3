@@ -1,8 +1,4 @@
-var grantHealth = 10;
-var userHealth = 40;
 var grantLives = 3;
-var userWins = 0;
-var grantWins = 0;
 
 var character = {
 	name: null,
@@ -35,37 +31,36 @@ function startGame() {
 }
 
 function startCombat (userName, healsRemaining) {  
-	while (userHealth > 0 && grantHealth > 0 && grantLives > 0) {
+	while (character.health > 0 && grant.health > 0) {
 	 
 		var attackOrQuit = prompt("Do you want to attack, heal, or quit?");
 
 		if (attackOrQuit.toLowerCase() === "attack") {
-			character.generateAttackDamage();
-			grant.generateAttackDamage();
+			character.health -= grant.generateAttackDamage();
+			grant.health -= character.generateAttackDamage();
 
-			if (grantHealth  < 1 && grantLives >= 1) {
+			if (grant.health  < 1 && grantLives >= 1) {
 				grantLives --;
-				userWins ++;
+				character.wins ++;
+
 				if (grantLives >= 1) {
 					console.log("THE ALMIGHTY GRANT HAS " + grantLives + " LIVES LEFT.");
-					grantHealth = 10;
+					grant.health = 10;
 				}
 			}
 		} else if (attackOrQuit.toLowerCase() === "heal") {
-			if (healsRemaining < 1) {
-				break;
+			if (character.healsRemaining > 0) {
+				character.heal();
 			}
-			character.heal();
-			break;
 		} else if (attackOrQuit.toLowerCase() === "quit") {
 			return;
 		}
-		console.log(userName + " has " + userHealth + " health left.")
-		console.log("The Almighty Grant has " + grantHealth + " health left.")
+		console.log(userName + " has " + character.health + " health left.")
+		console.log("The Almighty Grant has " + grant.health + " health left.")
 	}
 	if (grantLives <= 0) {
 		console.log(userName + " is the winner!");
-	} else if (userHealth <= 0) {
+	} else if (character.health <= 0) {
 		console.log("The Almighty Grant is the winner!");
 	}
 }
